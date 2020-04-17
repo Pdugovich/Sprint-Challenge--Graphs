@@ -15,10 +15,6 @@ def bfs_maze(starting_vertex):
     starting_vertex to destination_vertex in
     breath-first order.
     """
-    # Copied the traversal, except I included a
-    # if statement. If the last item in the path
-    # is the destination, then return the path!
-    # otherwise, continue on
     
     # create a queue and enqueue a starting index
     qq = Queue()
@@ -127,22 +123,44 @@ while len(traversal_graph) < len(room_graph):
         # Else, if all directions are known
         # TODO: Implement BFS!!!!
     else:
-        # make an empty list to fill with the path to follow back
+        # create a temporary path to traverse down until you get to a room with '?'
+        # temp_path = traversal_path.copy()
+        # # retrace your steps, using the traversal path
+        # while '?' not in traversal_graph[player.current_room.id].values():
+        #     # travel in that direction
+        #     player.travel(reverse_direction[temp_path[-1]])
+        #     # With each backwards move, add that direction
+        #     traversal_path.append(reverse_direction[temp_path[-1]])
+        #     print(f'temp_path = {temp_path}')
+        #     print(f'Travel Path while reversing = {traversal_path}')
+        #     temp_path.pop()
+        
+        # BFS inplementation
+        # qq = []
+        # qq.append([player.current_room.id])
+        # bfs_visited = set()
+        # bfs_path = []
+        # while len(qq) > 0:
+        #     bfs_path = qq.pop(0)
+        #     print(bfs_path)
+        #     # if '?' in traversal_graph[bfs_path[-1]].values():
+        #     #     path_to_follow = bfs_path
+        #     #     print(f'path_to_follow = {path_to_follow}')
+        #     if bfs_path[-1] not in bfs_visited:
+        #         bfs_visited.add(bfs_path[-1])
+        #         for neighbor in traversal_graph[bfs_path[-1]].values():
+        #             new_path = list(bfs_path)
+        #             new_path.append(neighbor)
+        #             qq.append(new_path)
+        # print(qq)
         path_to_follow = []
-        # Use the bfs function at the top to find the shortest route to a room with 
-        # a '?'
         chain_to_unknown = bfs_maze(player.current_room.id)
-        # Looping through the chain (minus the last)
         for node in chain_to_unknown[:-1]:
-            # Setting the next value in the chain
             next_index = chain_to_unknown.index(node) + 1
-            # Using a list comprehension to find the key(direction) for the value of the next index 
             direction_to_previous = [k for k,v in traversal_graph[node].items() if v == chain_to_unknown[next_index]]
-            # Appending that key(direction) to the path to follow
+            # print(direction_to_previous)
             path_to_follow.append(direction_to_previous[-1])
-        # Looping through each step in the path_to_follow,
-        # appending that direction to the travel path
-        # traveling in that direction
+        print(path_to_follow)
         for step in path_to_follow:
             traversal_path.append(step)
             player.travel(step)
