@@ -33,7 +33,7 @@ def bfs_maze(starting_vertex):
         if path[-1] not in visited and '?' in traversal_graph[path[-1]].values():
             #print(path)
             return path
-        else:
+        elif path[-1] not in visited:
             # DO THE THING!!!
             #print(path[-1])
             # mark as visited
@@ -123,6 +123,7 @@ while len(traversal_graph) < len(room_graph):
         # both in traversal_graph
         # Printing length of traversal path for debugging
         print(len(traversal_graph))
+        print(f'Current_room = {player.current_room.id}')
 
         # Else, if all directions are known
         # TODO: Implement BFS!!!!
